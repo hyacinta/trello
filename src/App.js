@@ -1,63 +1,69 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import './App.css';
-import Header from './components/templates/Header';
-import LoginForm from './pages/LoginForm';
-import TodosWrap from './pages/TodosWrap';
+import Header from './templates/Header';
+import Main from './templates/Main';
 
 const App = () => {
-  // 유저 아이디 데이터
+  // user 데이터
   const [users, setUsers] = useState([
     {
-      _id: 0,
-      id: 'hyacinta',
-      password: '1234',
+      id: 0,
+      userId: '1',
+      userPw: '1',
     },
   ]);
-
-  // input 데이터
+  // input 데이터 초기값
   const [inputs, setInputs] = useState({
     inputId: '',
-    inputPassword: '',
+    inputPw: '',
+    inputBoard: '',
+    inputTodo: '',
   });
-  const { inputId, inputPassword } = inputs;
+  const { inputId, inputPw, inputBoard, inputTodo } = inputs;
 
-  // 로그인 초기상태
-  const [loginState, setLoginstate] = useState({
+  // 로그인 초기값
+  const [login, setLogin] = useState({
     isLogin: false,
     loginId: '',
   });
-  const { isLogin, loginId } = loginState;
+  const { isLogin, loginId } = login;
 
   // input 값 받아오기
-  const inputChange = (e) => {
-    const { value, id } = e.target;
+  const getValue = (id, value) => {
     setInputs({
       ...inputs,
       [id]: value,
     });
   };
-
+  const changeInput = (e) => {
+    const { id, value } = e.target;
+    getValue(id, value);
+  };
   // 로그인 성공 데이터 변경
-  const successLogin = (id) => {
-    setLoginstate({
+  const successLogin = (Id) => {
+    setLogin({
       isLogin: true,
-      loginId: id,
+      loginId: Id,
     });
   };
 
   // 로그인 버튼 클릭
-  const btnLogin = () => {
-    users.map((user) =>
-      user.id === inputId && user.password === inputPassword
-        ? successLogin(user.id)
-        : alert('로그인 실패'),
-    );
+  const clickLogin = () => {
+    users.map((user) => {
+      user.userId === inputId && user.userPw === inputPw
+        ? successLogin(user.userId)
+        : alert('로그인 실패');
+    });
   };
 
-  // 로그아웃 데이터 변경
-  const btnLogout = () => {
-    setLoginstate({
+  // 로그아웃 버튼 클릭
+  const clickLogout = () => {
+    setLogin({
       isLogin: false,
       loginId: '',
     });
@@ -65,13 +71,15 @@ const App = () => {
 
   return (
     <div className="wrap">
-      <h1 className="a11yHidden">trello</h1>
-      <Header isLogin={isLogin} loginId={loginId} btnLogout={btnLogout} />
-      {isLogin ? (
-        <TodosWrap />
-      ) : (
-        <LoginForm btnLogin={btnLogin} inputChange={inputChange} />
-      )}
+      <Header isLogin={isLogin} clickLogout={clickLogout} loginId={loginId} />
+      <Main
+        isLogin={isLogin}
+        getValue={getValue}
+        clickLogin={clickLogin}
+        inputBoard={inputBoard}
+        inputTodo={inputTodo}
+        changeInput={changeInput}
+      />
     </div>
   );
 };

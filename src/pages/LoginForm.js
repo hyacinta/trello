@@ -1,16 +1,40 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import LoginList from '../components/templates/LoginList';
-import Button from '../components/atoms/Button';
+import './LoginForm.css';
 
-const Login = ({ btnLogin, inputChange }) => {
+const LoginForm = ({ clickLogin, changeInput }) => {
   return (
     <form className="loginForm">
-      <h2>로그인</h2>
-      <LoginList inputChange={inputChange} />
-      <Button className="btnLogin" title="LOGIN" btnClick={btnLogin} />
+      <ul>
+        <li>
+          <label htmlFor="inputId" className="inputLabel">
+            ID
+          </label>
+          <input
+            type="text"
+            id="inputId"
+            placeholder="아이디를 입력하세요"
+            onChange={changeInput}
+          />
+        </li>
+        <li>
+          <label htmlFor="inputPw" className="inputLabel">
+            PASSWORD
+          </label>
+          <input
+            type="text"
+            id="inputPw"
+            placeholder="비밀번호를 입력하세요"
+            onChange={changeInput}
+          />
+        </li>
+      </ul>
+      <button type="button" className="btnLogin" onClick={clickLogin}>
+        로그인
+      </button>
     </form>
   );
 };
 
-export default Login;
+export default LoginForm;

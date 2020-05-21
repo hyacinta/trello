@@ -1,0 +1,60 @@
+/* Todos */
+.makeBoard, .boardList {
+  display: flex;
+}
+.makeBoard {
+  width: 100%;
+  padding: 0 16px;
+  margin-bottom: 80px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.makeBoard label {
+  margin-right: 24px;
+  font-size: 2rem;
+}
+.makeBoard input {
+  width: 280px;
+}
+.btnAddBoard {
+  height: 37px;
+  margin-left: 8px;
+  color: #fff;
+  background: #3370FF;
+}
+.boardList {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  width: 280px;
+  padding: 24px;
+  margin: 0 16px 16px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,.05);
+}
+.board h2 {
+  flex-grow: 1;
+  padding-top: 4px;
+  font-size: 2rem;
+}
+.board .btnDelete {
+  display: inline-block;
+  align-self: center;
+  height: 32px;
+  color: #fff;
+  background: #3370FF;
+}
+.todoList {
+  width: 100%;
+  margin: 40px 0 16px;
+}
+.todoList li {
+  padding: 0 8px 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px dashed #b2b4dc;
+}
