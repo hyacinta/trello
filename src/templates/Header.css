@@ -1,0 +1,24 @@
+/* header */
+header {
+  padding: 16px 40px;
+  text-align: right;
+  color: #fff;
+  background: linear-gradient(160deg, #2E53E8, #6C40FF, );
+  background-color: #6C40FF;
+}
+.loginState {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 32px;
+  font-size: 1.6rem;
+}
+.loginState span {
+  align-self: center;
+}
+.btnLogout {
+  margin-left: 16px;
+  font-weight: 600;
+  color: #d3d5f4;
+  border: 1px solid #afb2e6;
+}

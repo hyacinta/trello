@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import Button from '../atoms/Button';
 
-const HeaderLogin = ({ loginId, btnLogout }) => {
+const HeaderLogin = ({ clickLogout, loginId }) => {
   return (
     <div className="loginState">
       <span>{loginId}</span>
-      <Button className="btnLogout" title="로그아웃" btnClick={btnLogout} />
+      <button type="button" onClick={clickLogout} className="btnLogout">
+        로그아웃
+      </button>
     </div>
   );
 };
-
 export default HeaderLogin;
