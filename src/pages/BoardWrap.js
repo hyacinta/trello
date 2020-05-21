@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './BoardWrap.css';
 
 const Board = ({ getValue, inputBoard, inputTodo, changeInput }) => {
   const date = new Date();
   const [boards, setBoards] = useState([]);
   const [todos, setTodos] = useState([]);
+  const todoInputRef = useRef();
 
   const addBoard = () => {
     setBoards([
@@ -34,14 +35,14 @@ const Board = ({ getValue, inputBoard, inputTodo, changeInput }) => {
           parent,
         },
       ]);
-
-      getValue('inputTodo', '');
+      todoInputRef.current.value = '';
     }
   };
   const deleteBoard = (id) => {
     setTodos(todos.filter((todo) => todo.parent !== id));
     setBoards(boards.filter((board) => board.id !== id));
   };
+
   return (
     <>
       <div className="makeBoard">
@@ -60,6 +61,7 @@ const Board = ({ getValue, inputBoard, inputTodo, changeInput }) => {
       </div>
       <ul className="boardList">
         {boards.map((board) => {
+          const todoContent = todos.filter((todo) => todo.parent === board.id);
           return (
             <li className="board" key={board.id}>
               <h2>{board.title}</h2>
@@ -71,17 +73,18 @@ const Board = ({ getValue, inputBoard, inputTodo, changeInput }) => {
                 삭제
               </button>
               <ul className="todoList">
-                {todos.map((todo) => {
+                {todoContent.map((todo) => {
                   return <li key={todo.id}>{todo.content}</li>;
                 })}
               </ul>
               <input
                 type="text"
                 id="inputTodo"
+                name="test"
                 placeholder="할일을 입력하세요"
-                value={inputTodo}
                 onChange={changeInput}
                 onKeyPress={(e) => addTodo(e, board.id)}
+                ref={todoInputRef}
               />
             </li>
           );

@@ -28,7 +28,7 @@ const App = () => {
 
   // 로그인 초기값
   const [login, setLogin] = useState({
-    isLogin: false,
+    isLogin: true,
     loginId: '',
   });
   const { isLogin, loginId } = login;
