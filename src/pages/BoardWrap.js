@@ -1,15 +1,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import Board from '../orginisms/Board';
 import './BoardWrap.css';
 
-const Board = ({ getValue, inputBoard, inputTodo, changeInput }) => {
+const BoardWrap = ({ getValue, inputBoard, changeInput }) => {
   const date = new Date();
   const [boards, setBoards] = useState([]);
   const [todos, setTodos] = useState([]);
-  const todoInputRef = useRef();
 
   const addBoard = () => {
+    if (inputBoard.trim() === '') return;
     setBoards([
       ...boards,
       {
@@ -25,19 +26,20 @@ const Board = ({ getValue, inputBoard, inputTodo, changeInput }) => {
       addBoard();
     }
   };
-  const addTodo = (e, parent) => {
+  const addTodo = (e, parent, init) => {
     if (e.key === 'Enter') {
       setTodos([
         ...todos,
         {
           id: date.getTime(),
-          content: inputTodo,
+          content: e.target.value,
           parent,
         },
       ]);
-      todoInputRef.current.value = '';
+      init();
     }
   };
+
   const deleteBoard = (id) => {
     setTodos(todos.filter((todo) => todo.parent !== id));
     setBoards(boards.filter((board) => board.id !== id));
@@ -63,30 +65,13 @@ const Board = ({ getValue, inputBoard, inputTodo, changeInput }) => {
         {boards.map((board) => {
           const todoContent = todos.filter((todo) => todo.parent === board.id);
           return (
-            <li className="board" key={board.id}>
-              <h2>{board.title}</h2>
-              <button
-                type="button"
-                className="btnDelete"
-                onClick={() => deleteBoard(board.id)}
-              >
-                삭제
-              </button>
-              <ul className="todoList">
-                {todoContent.map((todo) => {
-                  return <li key={todo.id}>{todo.content}</li>;
-                })}
-              </ul>
-              <input
-                type="text"
-                id="inputTodo"
-                name="test"
-                placeholder="할일을 입력하세요"
-                onChange={changeInput}
-                onKeyPress={(e) => addTodo(e, board.id)}
-                ref={todoInputRef}
-              />
-            </li>
+            <Board
+              key={board.id}
+              todoContent={todoContent}
+              board={board}
+              addTodo={addTodo}
+              deleteBoard={deleteBoard}
+            />
           );
         })}
       </ul>
@@ -94,4 +79,4 @@ const Board = ({ getValue, inputBoard, inputTodo, changeInput }) => {
   );
 };
 
-export default Board;
+export default BoardWrap;
