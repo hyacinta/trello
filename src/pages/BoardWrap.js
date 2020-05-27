@@ -27,7 +27,7 @@ const BoardWrap = ({ getValue, inputBoard, changeInput }) => {
     }
   };
   const addTodo = (e, parent, init) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.target.value.trim() !== '') {
       setTodos([
         ...todos,
         {
