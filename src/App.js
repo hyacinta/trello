@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './templates/Header';
 import Main from './templates/Main';
@@ -68,6 +68,15 @@ const App = () => {
       loginId: '',
     });
   };
+  // useEffect
+  useEffect(() => {
+    login.isLogin ? alert('로그인 성공') : '';
+    console.log('컴포넌트가 그려짐');
+    console.log(login);
+    return () => {
+      console.log('컴포넌트가 사라짐');
+    };
+  }, [login]);
 
   return (
     <div className="wrap">

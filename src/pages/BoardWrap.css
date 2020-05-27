@@ -22,6 +22,10 @@
   color: #fff;
   background: #3370FF;
 }
+.totalCounter {
+  margin-bottom: 24px;
+  font-size: 2rem;
+}
 .boardList {
   justify-content: space-around;
   align-items: flex-start;

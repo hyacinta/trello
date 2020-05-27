@@ -1,6 +1,7 @@
+/* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Board from '../orginisms/Board';
 import './BoardWrap.css';
 
@@ -45,6 +46,10 @@ const BoardWrap = ({ getValue, inputBoard, changeInput }) => {
     setBoards(boards.filter((board) => board.id !== id));
   };
 
+  const boardsLength = (boards) => {
+    return boards.length;
+  };
+  const counter = useMemo(() => boardsLength(boards), [boards]);
   return (
     <>
       <div className="makeBoard">
@@ -61,6 +66,7 @@ const BoardWrap = ({ getValue, inputBoard, changeInput }) => {
           추가
         </button>
       </div>
+      <div className="totalCounter">TOTAL : {counter}</div>
       <ul className="boardList">
         {boards.map((board) => {
           const todoContent = todos.filter((todo) => todo.parent === board.id);
