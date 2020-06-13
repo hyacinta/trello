@@ -1,17 +1,14 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 
-const Boards = ({ deleteBoard, addTodo, board, todoContent }) => {
-  const [todoInputState, setTodoInputState] = useState('');
-
-  const changeTotodoInput = (e) => {
-    setTodoInputState(e.target.value);
-  };
-
-  const initTodoInput = () => {
-    setTodoInputState('');
-  };
-
+const Boards = ({
+  inputTodo,
+  deleteBoard,
+  addTodo,
+  board,
+  todoContent,
+  changeInput,
+}) => {
   return (
     <li className="board" key={board.id}>
       <h2>{board.title}</h2>
@@ -32,9 +29,9 @@ const Boards = ({ deleteBoard, addTodo, board, todoContent }) => {
         id="inputTodo"
         name="test"
         placeholder="할일을 입력하세요"
-        value={todoInputState}
-        onChange={changeTotodoInput}
-        onKeyPress={(e) => addTodo(e, board.id, initTodoInput)}
+        value={inputTodo}
+        onChange={changeInput}
+        onKeyPress={(e) => addTodo(e, board.id)}
       />
     </li>
   );

@@ -1,49 +1,79 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useReducer } from 'react';
 import Board from '../orginisms/Board';
 import './BoardWrap.css';
 
-const BoardWrap = ({ getValue, inputBoard, changeInput }) => {
+const BoardWrap = ({ inputTodo, inputBoard, changeInput }) => {
   const date = new Date();
-  const [boards, setBoards] = useState([]);
-  const [todos, setTodos] = useState([]);
+
+  function boardsReducer(state, action) {
+    switch (action.type) {
+      case 'ADD_BOARD':
+        return [
+          ...state,
+          {
+            id: date.getTime(),
+            title: inputBoard,
+          },
+        ];
+      case 'DELETE_BOARD':
+        return state.filter((board) => board.id !== action.id);
+      default:
+        return state;
+    }
+  }
+  const [boards, boardDispatch] = useReducer(boardsReducer, []);
+
+  function todosReducer(state, action) {
+    switch (action.type) {
+      case 'ADD_TODO':
+        return [
+          ...state,
+          {
+            id: date.getTime(),
+          },
+        ];
+      case 'DELETE_TODO':
+        return state.filter((todo) => todo.parent !== action.id);
+      default:
+        return state;
+    }
+  }
+  const [todos, todosDispatch] = useReducer(todosReducer, []);
 
   const addBoard = () => {
     if (inputBoard.trim() === '') return;
-    setBoards([
-      ...boards,
-      {
-        id: date.getTime(),
-        title: inputBoard,
-      },
-    ]);
-
-    getValue('inputBoard', '');
+    boardDispatch({
+      type: 'ADD_BOARD',
+      title: inputBoard,
+    });
   };
   const enterAddBoard = (e) => {
     if (e.key === 'Enter') {
       addBoard();
     }
   };
-  const addTodo = (e, parent, init) => {
+  const addTodo = (e, parent) => {
     if (e.key === 'Enter' && e.target.value.trim() !== '') {
-      setTodos([
-        ...todos,
-        {
-          id: date.getTime(),
-          content: e.target.value,
-          parent,
-        },
-      ]);
-      init();
+      todosDispatch({
+        type: 'ADD_TODO',
+        content: e.target.value,
+        parent,
+      });
     }
   };
 
   const deleteBoard = (id) => {
-    setTodos(todos.filter((todo) => todo.parent !== id));
-    setBoards(boards.filter((board) => board.id !== id));
+    todosDispatch({
+      type: 'DELETE_TODO',
+      id,
+    });
+    boardDispatch({
+      type: 'DELETE_BOARD',
+      id,
+    });
   };
 
   const boardsLength = (boards) => {
@@ -77,6 +107,8 @@ const BoardWrap = ({ getValue, inputBoard, changeInput }) => {
               board={board}
               addTodo={addTodo}
               deleteBoard={deleteBoard}
+              inputTodo={inputTodo}
+              changeInput={changeInput}
             />
           );
         })}
