@@ -24,6 +24,7 @@ const BoardWrap = ({ inputTodo, inputBoard, changeInput }) => {
         return state;
     }
   }
+
   const [boards, boardDispatch] = useReducer(boardsReducer, []);
 
   function todosReducer(state, action) {
@@ -33,6 +34,8 @@ const BoardWrap = ({ inputTodo, inputBoard, changeInput }) => {
           ...state,
           {
             id: date.getTime(),
+            content: action.content,
+            parent: action.parent,
           },
         ];
       case 'DELETE_TODO':
@@ -55,13 +58,14 @@ const BoardWrap = ({ inputTodo, inputBoard, changeInput }) => {
       addBoard();
     }
   };
-  const addTodo = (e, parent) => {
-    if (e.key === 'Enter' && e.target.value.trim() !== '') {
+  const addTodo = (e, parent, init) => {
+    if (e.key === 'Enter') {
       todosDispatch({
         type: 'ADD_TODO',
         content: e.target.value,
         parent,
       });
+      init();
     }
   };
 

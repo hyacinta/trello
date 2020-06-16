@@ -1,23 +1,23 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import React from 'react';
 
 const Boards = ({
-  // inputTodo,
+  inputTodo,
   deleteBoard,
-  addTodo,
   board,
   todoContent,
-  // changeInput,
+  changeInput,
 }) => {
-  const [todoInputState, setTodoInputState] = useState('');
+  // const [todoInputState, setTodoInputState] = useState('');
 
-  const changeTotodoInput = (e) => {
-    setTodoInputState(e.target.value);
-  };
+  // const changeTotodoInput = (e) => {
+  //   setTodoInputState(e.target.value);
+  // };
 
-  const initTodoInput = () => {
-    setTodoInputState('');
-  };
+  // const initTodoInput = () => {
+  //   setTodoInputState('');
+  // };
 
   return (
     <li className="board" key={board.id}>
@@ -39,9 +39,12 @@ const Boards = ({
         id="inputTodo"
         name="test"
         placeholder="할일을 입력하세요"
-        value={todoInputState}
-        onChange={changeTotodoInput}
-        onKeyPress={(e) => addTodo(e, board.id, initTodoInput)}
+        value={inputTodo}
+        onChange={changeInput}
+
+        // value={todoInputState}
+        // onChange={changeTotodoInput}
+        // onKeyPress={(e) => addTodo(e, board.id, initTodoInput)}
       />
     </li>
   );
